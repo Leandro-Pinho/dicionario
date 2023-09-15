@@ -80,6 +80,21 @@ body {
 }
 
 /* list mean */
+
+.wrapper .info-text {
+    font-size: 13px;
+    color: #9a9a9a;
+    margin: -3px 0 -10px;
+}
+
+.wrapper.active .info-text {
+    display: none;
+}
+
+.info-text span {
+    font-weight: 500;
+}
+
 .wrapper ul li {
     display: flex;
     align-items: center;
@@ -90,7 +105,17 @@ body {
 }
 
 .wrapper ul {
-    display: none;
+    /* display: none; a mesma coisa de colocar isso */
+    height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.2s ease;
+}
+
+.wrapper.active ul {
+    /* display: block; a mesma coisa de colocar isso */
+    height: 303px;
+    opacity: 1;
 }
 
 ul li:last-child {
