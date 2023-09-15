@@ -21,7 +21,17 @@ function data(result, word) {
         infoText.innerHTML = `Searching the meaning of <span>"${word}"</span>. Please, try to search for another word.`;
     } else {
         console.log(result);
-        wrapper.classList.add("active")
+        wrapper.classList.add("active");
+        let definitions = result[0].meanings[0].definitions[0],
+            examples = result[0].meanings[1].definitions[0],
+            phonetics = `${result[0].meanings[0].partOfSpeech} ${result[0].phonetics[0].text}`;
+
+        // let's pass the particular response data to a particular html element
+        document.querySelector(".word p").innerText = result[0].word;
+        document.querySelector(".word span").innerText = phonetics;
+
+        document.querySelector(".meaning span").innerText = definitions.definition;
+        document.querySelector(".example span").innerText = examples.example;
     }
 }
 
