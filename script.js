@@ -43,14 +43,32 @@ function data(result, word) {
             synonyms.parentElement.style.display = "block";
             synonyms.innerHTML = "";
             for (let i = 0; i < 5; i++) { // getting only 5 out of many
-                let tag = `<span>${syno.synonyms[i]},</span>`;
+                let tag = `<span onclick=search('${syno.synonyms[i]}')>${syno.synonyms[i]},</span>`;
                 synonyms.insertAdjacentHTML("beforeend", tag); // passing all 5 synonyms inside synonyms div
-                console.log(tag);
             }
         }
 
-        audio = new Audio(result[0].phonetics[0].audio); // creating new audio obj and passing audio src
+
+        // função para procurar o audio da palavra digitada, 
+        const music = () => {
+            if (result[0].phonetics[0].audio === "") {
+                let sum = "";
+                for (let i = 0; i < phonetics.length; i++) {
+                    sum = result[0].phonetics[i].audio;
+                    if (sum !== "") break;
+                }
+                return sum;
+            }
+            return result[0].phonetics[0].audio
+        }
+        audio = new Audio(music()); // creating new audio obj and passing audio src
     }
+}
+
+// fetch api function
+function search(word) {
+    searchInput.value = word;
+    fetchApi(word);
 }
 
 // pegando o valor digitado no input
@@ -60,6 +78,7 @@ searchInput.addEventListener("keyup", e => {
     }
 });
 
+// adicionando o audio
 volumeIcon.addEventListener("click", () => {
     audio.play();
 });
