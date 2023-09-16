@@ -10,6 +10,7 @@ let audio;
 
 // fetch api function
 function fetchApi(word) {
+    wrapper.classList.remove("active");
     infoText.style.color = "#000"
     infoText.innerHTML = `Searching the meaning of <span>"${word}"</span>`;
     let url = `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`;
@@ -70,6 +71,7 @@ function data(result, word) {
 function search(word) {
     searchInput.value = word;
     fetchApi(word);
+    wrapper.classList.remove("active");
 }
 
 // pegando o valor digitado no input
@@ -87,4 +89,7 @@ volumeIcon.addEventListener("click", () => {
 removeIcon.addEventListener("click", () => {
     searchInput.value = "";
     searchInput.focus();
+    wrapper.classList.remove("active");
+    infoText.style.color = "#000";
+    infoText.innerHTML = `Searching the meaning of <span>"${word}"</span>. Please, try to search for another word.`;
 })
