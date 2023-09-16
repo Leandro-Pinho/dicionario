@@ -2,7 +2,8 @@ const wrapper = document.querySelector(".wrapper"),
     searchInput = wrapper.querySelector("input"),
     synonyms = wrapper.querySelector(".synonyms .list"),
     infoText = wrapper.querySelector(".info-text"),
-    volumeIcon = wrapper.querySelector(".word i");
+    volumeIcon = wrapper.querySelector(".word i"),
+    removeIcon = wrapper.querySelector(".search span");
 
 let audio;
 
@@ -82,3 +83,8 @@ searchInput.addEventListener("keyup", e => {
 volumeIcon.addEventListener("click", () => {
     audio.play();
 });
+
+removeIcon.addEventListener("click", () => {
+    searchInput.value = "";
+    searchInput.focus();
+})
