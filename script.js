@@ -1,7 +1,10 @@
 const wrapper = document.querySelector(".wrapper"),
     searchInput = wrapper.querySelector("input"),
-    infoText = wrapper.querySelector(".info-text");
+    synonyms = wrapper.querySelector(".synonyms .list"),
+    infoText = wrapper.querySelector(".info-text"),
+    volumeIcon = wrapper.querySelector(".word i");
 
+let audio;
 
 
 // fetch api function
@@ -24,6 +27,7 @@ function data(result, word) {
         wrapper.classList.add("active");
         let definitions = result[0].meanings[0].definitions[0],
             examples = result[0].meanings[1].definitions[0],
+            syno = result[0].meanings[1],
             phonetics = `${result[0].meanings[0].partOfSpeech} ${result[0].phonetics[0].text}`;
 
         // let's pass the particular response data to a particular html element
@@ -32,6 +36,20 @@ function data(result, word) {
 
         document.querySelector(".meaning span").innerText = definitions.definition;
         document.querySelector(".example span").innerText = examples.example;
+
+        if (syno.synonyms[0] == undefined) { // if there is no synonym then hide the synonyms div
+            synonyms.parentElement.style.display = "none";
+        } else {
+            synonyms.parentElement.style.display = "block";
+            synonyms.innerHTML = "";
+            for (let i = 0; i < 5; i++) { // getting only 5 out of many
+                let tag = `<span>${syno.synonyms[i]},</span>`;
+                synonyms.insertAdjacentHTML("beforeend", tag); // passing all 5 synonyms inside synonyms div
+                console.log(tag);
+            }
+        }
+
+        audio = new Audio(result[0].phonetics[0].audio); // creating new audio obj and passing audio src
     }
 }
 
@@ -40,4 +58,8 @@ searchInput.addEventListener("keyup", e => {
     if (e.key === "Enter" && e.target.value) {
         fetchApi(e.target.value);
     }
-})
+});
+
+volumeIcon.addEventListener("click", () => {
+    audio.play();
+});
